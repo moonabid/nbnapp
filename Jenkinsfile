@@ -49,4 +49,14 @@ pipeline {
         success {
             sh '''
             curl -X POST -H 'Content-type: application/json' \
-            --data '{"text":"✅ *Build
+            --data '{"text":"✅ *Build SUCCESS* for `'"$JOB_NAME"'` (#'"$BUILD_NUMBER"')"}' $SLACK_WEBHOOK
+            '''
+        }
+        failure {
+            sh '''
+            curl -X POST -H 'Content-type: application/json' \
+            --data '{"text":"❌ *Build FAILED* for `'"$JOB_NAME"'` (#'"$BUILD_NUMBER"')"}' $SLACK_WEBHOOK
+            '''
+        }
+    }
+}
