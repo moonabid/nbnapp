@@ -3,14 +3,14 @@ pipeline {
  
     environment {
         IMAGE_NAME = 'nbn-app'
-        DOCKER_HUB_REPO = 'mohdibrahimk/nbn-app'
+        DOCKER_HUB_REPO = 'tharun33/nbn-app'
         SLACK_WEBHOOK = credentials('slack_webhook_url')  // Add this credential in Jenkins
     }
  
     stages {
         stage('Clone Repo') {
             steps {
-                git credentialsId: 'git-creds', url: 'https://github.com/MohdKhal/nbn-ci-pipeline.git', branch: 'main'
+                git credentialsId: 'git-creds', url: 'https://github.com/tharunsd/nbnapp.git', branch: 'main'
             }
         }
  
