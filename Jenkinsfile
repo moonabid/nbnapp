@@ -4,7 +4,7 @@ pipeline {
     environment {
         IMAGE_NAME = 'nbn-app'
         DOCKER_HUB_REPO = 'moonabid/nbn-app'
-        SLACK_WEBHOOK = credentials('slack_webhook_url') // Add this credential in Jenkins
+        SLACK_WEBHOOK = credentials('slack-webhook-url') // match credential ID exactly
     }
 
     stages {
@@ -47,16 +47,21 @@ pipeline {
 
     post {
         success {
-            sh '''
-            curl -X POST -H 'Content-type: application/json' \
-            --data '{"text":"✅ *Build SUCCESS* for `'"$JOB_NAME"'` (#'"$BUILD_NUMBER"')"}' $SLACK_WEBHOOK
-            '''
+            node {
+                sh '''
+                curl -X POST -H 'Content-type: application/json' \
+                --data '{"text":"✅ *Build SUCCESS* for `'"$JOB_NAME"'` (#'"$BUILD_NUMBER"')"}' $SLACK_WEBHOOK
+                '''
+            }
         }
+
         failure {
-            sh '''
-            curl -X POST -H 'Content-type: application/json' \
-            --data '{"text":"❌ *Build FAILED* for `'"$JOB_NAME"'` (#'"$BUILD_NUMBER"')"}' $SLACK_WEBHOOK
-            '''
+            node {
+                sh '''
+                curl -X POST -H 'Content-type: application/json' \
+                --data '{"text":"❌ *Build FAILED* for `'"$JOB_NAME"'` (#'"$BUILD_NUMBER"')"}' $SLACK_WEBHOOK
+                '''
+            }
         }
     }
 }
