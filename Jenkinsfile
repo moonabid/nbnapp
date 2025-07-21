@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Clone Repo') {
             steps {
-                git credentialsId: 'git-creds', url: 'https://github.com/moonabid/nbnapp.git', branch: 'main'
+                git credentialsId: 'git-cred', url: 'https://github.com/moonabid/nbnapp.git', branch: 'main'
             }
         }
 
